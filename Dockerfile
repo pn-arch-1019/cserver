@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Thiết lập biến môi trường cho Django (nếu bạn sử dụng Django)
-ENV DJANGO_SETTINGS_MODULE=crypto_exchange.settings
+ENV DJANGO_SETTINGS_MODULE=coinserver.settings
 
 # Chạy lệnh để khởi động server, thay đổi lệnh này tùy thuộc vào framework của bạn (Django, Flask, etc.)
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
