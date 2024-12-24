@@ -1,0 +1,244 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng giao dịch tiền mã hóa Crypto</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+</head>
+<body>
+
+    <div class="header-section container-fluid">
+        <div class="container">
+            <div class="navbar" id="navbar">
+                <a href="/" class="logo">
+                    <img src="{% static 'assets/images/CoinB-05.png' %}" style="width: 192px;height: 64px;object-fit: cover;" alt="Logo">
+                </a>
+                <div class="nav-items">
+                    <a href="#" class="nav-link">
+                        <img src="{% static 'assets/images/ic_flag_vn.svg' %}" alt="Việt Nam">
+                    </a>
+                    <a href="#" class="nav-link">
+                        <img src="{% static 'assets/images/ic_moon.svg' %}" alt="Moon">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-section container">
+        <div class="wrapper">
+            <div class="form-section">
+
+                <div class="tabcontent" style="display: block;">
+                    <h1 style="font-size: 24px;text-align: center;margin-top: 16px;">Đang chờ bạn nạp {{sell_trans.coin_name}}</h1>
+
+                    <div style="display: flex;align-items: center;justify-content: center;">
+                        <button style="display: inline-block;margin: 32px auto;font-size: 13px;color: #fff;background-color: #FF2B18;outline: none;border: none;height: 32px;border-radius: 16px;padding: 4px;cursor: pointer;" id="timerButton">Thời gian 10:00</button>
+                        <script>
+
+let totalTime = 600;
+                            const timerButton = document.getElementById('timerButton');
+
+                            // Function to format time as mm:ss
+                            function formatTime(seconds) {
+                                const minutes = Math.floor(seconds / 60);
+                                const remainingSeconds = seconds % 60;
+                                return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+                            }
+
+                            // Update button text with formatted time
+                            timerButton.textContent = `Thời gian ${formatTime(totalTime)}`;
+
+                            // Function to handle the countdown
+                            function startCountdown() {
+                                const countdownInterval = setInterval(() => {
+                                    totalTime--;  // Decrease total time by 1 second
+                                    timerButton.textContent = `Thời gian ${formatTime(totalTime)}`;  // Update button text
+
+                                    // If time reaches 00:00, stop the countdown
+                                    if (totalTime <= 0) {
+                                        clearInterval(countdownInterval);
+                                        timerButton.textContent = 'Thời gian 00:00';
+                                    }
+                                }, 1000);  // Set interval to 1 second
+                            }
+
+                            startCountdown();
+
+
+                        </script>
+                    </div>
+
+                    <p style="margin-top: 32px;text-align: center;font-size: 15px;margin-bottom: 24px;">Vui lòng chuyển coin vào địa chỉ bên dưới</p>
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: start;padding: 16px 8px;gap: 16px;">
+                        <strong style="display: inline-block;font-size: 15px;">Số lượng:</strong>
+                        <span style="display: inline-block;font-size: 15px;">{{sell_trans.amount}} {{sell_trans.coin_name}}</span>
+                    </div>
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: start;padding: 16px 8px;gap: 16px;">
+                        <strong style="display: inline-block;font-size: 15px;">Địa chỉ ví nạp:</strong>
+                        <span style="display: inline-block;font-size: 15px;">{{sell_trans.wallet_address_in}}</span>
+                    </div>
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: start;padding: 16px 8px;gap: 16px;">
+                        <strong style="display: inline-block;font-size: 15px;">Mạng lưới:</strong>
+                        <span style="display: inline-block;font-size: 15px;">BSC</span>
+                    </div>
+
+                    <div class="mt-3 d-flex align-items-center justify-content-center">
+                        <div style="width: 40px;height: 40px;" class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    
+
+                    <p style="text-align: center;margin-bottom: 16px;margin-top: 60px;"><strong style="display: inline-block;font-size: 14px;">Đang đợi nạp ...</strong></p>
+                    <p style="text-align: center;font-size: 15px;">Hệ thống sẽ tự động chuyển tiền tới tài khoản ngân hàng của bạn sau khi nhận được {{sell_trans.coin_name}}</p>
+                    
+                </div>
+
+                
+
+
+                
+            </div>
+
+            <div class="form-section" style="margin-top: 24px;">
+                <div class="tabcontent" style="display: block;">
+                    <h1 style="font-size: 24px;text-align: center;margin-top: 16px;">Chi tiết giao dịch</h1>
+
+                    
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid #ddd;padding: 16px 8px;">
+                        <strong style="display: inline-block;font-size: 15px;">Mã giao dịch:</strong>
+                        <span style="display: inline-block;font-size: 15px;">{{sell_trans.guid}}</span>
+                    </div>
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid #ddd;padding: 16px 8px;">
+                        <strong style="display: inline-block;font-size: 15px;">Đơn giá:</strong>
+                        <span style="display: inline-block;font-size: 15px;">{{sell_trans.price_transfer|intcomma}} VND</span>
+                    </div>
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid #ddd;padding: 16px 8px;">
+                        <strong style="display: inline-block;font-size: 15px;">Tên ngân hàng:</strong>
+                        <span style="display: inline-block;font-size: 15px;">Ngân hàng TMCP Ngoại Thương Việt Nam</span>
+                    </div>
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid #ddd;padding: 16px 8px;">
+                        <strong style="display: inline-block;font-size: 15px;">Số tài khoản:</strong>
+                        <span style="display: inline-block;font-size: 15px;">{{sell_trans.bank_number}}</span>
+                    </div>
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid #ddd;padding: 16px 8px;">
+                        <strong style="display: inline-block;font-size: 15px;">Tên chủ tài khoản:</strong>
+                        <span style="display: inline-block;font-size: 15px;">{{sell_trans.bank_username}}</span>
+                    </div>
+
+                    <div class="item" style="display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid #ddd;padding: 16px 8px;"></div>
+                        <strong style="display: inline-block;font-size: 15px;">Bạn sẽ nhận:</strong>
+                        <span style="display: inline-block;font-size: 15px;">{{sell_trans.remain}} VND</span>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <p class="h4">Bạn có câu hỏi?</p>
+            <div class="questions-section">
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi có cần đăng ký tài khoản không?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Không! Chúng tôi muốn mang tới trải nghiệm đơn giản và nhanh chóng tối đa cho người dùng nên việc đăng ký tài khoản là không cần thiết.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi có cần KYC không?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Trong phần lớn trường hợp chúng tôi không cần KYC. Có vài trường hợp chúng tôi sẽ xác minh danh tính các khách hàng (KYC) và giao dịch được chỉ định. Điều này chỉ xảy ra khi hệ thống của chúng tôi hay hệ thống của đối tác phát hiện ra những điểm đáng nghi trong giao dịch.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Hạn mức một lần giao dịch là bao nhiêu?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Giới hạn cho 1 lần giao dịch là VND299,999,000. Bạn có thể thực hiện nhiều giao dịch trong một ngày
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi cần hướng dẫn cách giao dịch</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Vui lòng truy cập vào đường <a style="display: inline-block;font-size: 14px;" href="#">link này</a> để xem hướng dẫn mua bán.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            // console.log("Oke!");
+            
+
+            $(".flip-icon").click(function(){
+                $(this).closest('.question').find('.question-desc').slideToggle("slow");
+            });
+
+
+            $(window).scroll(function() {
+                // Lấy vị trí cuộn của trang
+                var scrollTop = $(window).scrollTop();
+                // console.log("Vị trí cuộn hiện tại: " + scrollTop);
+
+                // Thực hiện hành động dựa trên vị trí cuộn
+                // Ví dụ: Thay đổi kiểu dáng của header khi cuộn
+                if (scrollTop > 100) {
+                    $('.header-section').addClass('scrolled');
+                } else {
+                    $('.header-section').removeClass('scrolled');
+                }
+            });
+
+        });
+        
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    
+</body>
+</html>

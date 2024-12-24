@@ -1,0 +1,203 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="CoinBotC là cổng giao dịch tiền mã hóa số 1 Việt Nam. Mua bán Bitcoin, Ethereum, USDT và hơn 100 loại tiền điện tử khác an toàn, nhanh chóng và tiện lợi.">
+    <meta name="keywords" content="CoinBotC, mua bán Bitcoin, giao dịch Ethereum, cổng giao dịch tiền mã hóa, sàn giao dịch tiền điện tử Việt Nam, mua USDT an toàn">
+    <meta name="author" content="CoinBotC Team">
+    
+    <!-- Open Graph Meta -->
+    <meta property="og:title" content="Cổng Giao Dịch Tiền Mã Hóa Số 1 Việt Nam - CoinBotC">
+    <meta property="og:description" content="Giao dịch tiền mã hóa nhanh chóng, an toàn với CoinBotC - nền tảng hỗ trợ Bitcoin, Ethereum, USDT và nhiều loại tiền điện tử hàng đầu.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://coinbotc.net">
+    <meta property="og:image" content="https://coinbotc.net/static/assets/images/CoinB-05.png">
+    <meta property="og:locale" content="vi_VN">
+    <meta property="og:site_name" content="CoinBotC">
+
+    <!-- Twitter Meta -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cổng Giao Dịch Tiền Mã Hóa Số 1 Việt Nam - CoinBotC">
+    <meta name="twitter:description" content="Giao dịch tiền mã hóa nhanh chóng, an toàn với CoinBotC - nền tảng hỗ trợ Bitcoin, Ethereum, USDT và nhiều loại tiền điện tử hàng đầu.">
+    <meta name="twitter:image" content="https://coinbotc.net/static/assets/images/CoinB-05.png">
+    <meta name="twitter:site" content="@coinbotc">
+
+    <title>Cổng Giao Dịch Tiền Mã Hóa Số 1 Việt Nam - CoinBotC</title>
+
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.0.3/numeral.min.js" integrity="sha512-sMgx0iqtQVrEwuUPBeRZE42fOPWIRBRb3CLaoK5gilEnzKTkdJpjguVk5HpcmOgjyZlHSGqXXugNlaovRhYLsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+
+    <div class="header-section container-fluid">
+        <div class="container">
+            <div class="navbar" id="navbar">
+                <a href="#" class="logo">
+                    <img src="{% static 'assets/images/CoinB-05.png' %}" style="width: 192px;height: 64px;object-fit: cover;" alt="Logo">
+                </a>
+                <div class="nav-items">
+                    <a href="#" class="nav-link">
+                        <img src="{% static 'assets/images/ic_flag_vn.svg' %}" alt="Việt Nam">
+                    </a>
+                    <a href="#" class="nav-link">
+                        <img src="{% static 'assets/images/ic_moon.svg' %}" alt="Moon">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-section container">
+        <div class="wrapper">
+            <p class="title">Cổng giao dịch tiền mã hóa crypto</p>
+            <p class="sub-title">Không phí ẩn, không đăng ký tài khoản, không giới hạn.</p>
+            <div class="form-section">
+                <div class="tab">
+                    <div class="tablinks">
+                        <button id="defaultOpen" onclick="openTab(event, 'buy-form');" class="tablink">
+                            Mua
+                        </button>
+                        <button class="tablink" onclick="openTab(event, 'sell-form');">
+                            Bán
+                        </button>
+                    </div>
+                </div>
+
+                <span class="d-none" id="btc-price">{{BTC.price}}</span>
+                <span class="d-none" id="eth-price">{{ETH.price}}</span>
+                <span class="d-none" id="usdt-price">{{USDT.price}}</span>
+                <span class="d-none" id="bnb-price">{{BNB.price}}</span>
+
+                <div class="tabcontent" id="buy-form">
+                    <form action="{% url 'create-buy' %}" method="GET">
+                        {% csrf_token %}
+                        <div class="form-control">
+                            <div class="form-label">Số lượng mua</div>
+                            <div class="flex-bw">
+                                <input type="number" name="buy-amount" min="0" step="0.00001" id="buy-amount" placeholder="0" required>
+                                <select name="buy-option" id="buy-option">
+                                    <option value="BTC" data-price="{{BTC.price}}" data-amount="{{BTC.price|intcomma}}">BTC</option>
+                                    <option value="ETH" data-price="{{ETH.price}}" data-amount="{{ETH.price|intcomma}}">ETH</option>
+                                    <option value="USDT" data-price="{{USDT.price}}" data-amount="{{USDT.price|intcomma}}">USDT</option>
+                                    <option value="BNB" data-price="{{BNB.price}}" data-amount="{{BNB.price|intcomma}}">BNB</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <div class="form-label">Bạn sẽ gửi</div>
+                            <div class="flex-bw">
+                                <input type="number" name="buy-transfer" id="buy-transfer" placeholder="0" readonly>
+                                <select name="buy-currency" id="buy-currency">
+                                    <option value="VND">VND</option>
+                                </select>
+                            </div>
+                            <div class="form-subinfo" id="buy-subinfo">
+                                Đơn giá {{BTC.price|intcomma}} VND/BTC
+                            </div>
+                        </div>
+                        <button class="form-submit" type="submit">Mua</button>
+                    </form>
+                </div>
+
+
+
+
+                <div class="tabcontent" id="sell-form">
+                    <form action="{% url 'create-sell' %}" method="GET">
+                        {% csrf_token %}
+                        <div class="form-control">
+                            <div class="form-label">Số lượng bán</div>
+                            <div class="flex-bw">
+                                <input type="number" name="sell-amount" min="0" step="0.00001" id="sell-amount" placeholder="0" required>
+                                <select name="sell-option" id="sell-option">
+                                    <option value="BTC" data-price="{{BTC.price}}" data-amount="{{BTC.price|intcomma}}">BTC</option>
+                                    <option value="ETH" data-price="{{ETH.price}}" data-amount="{{ETH.price|intcomma}}">ETH</option>
+                                    <option value="USDT" data-price="{{USDT.price}}" data-amount="{{USDT.price|intcomma}}">USDT</option>
+                                    <option value="BNB" data-price="{{BNB.price}}" data-amount="{{BNB.price|intcomma}}">BNB</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <div class="form-label">Bạn sẽ nhận</div>
+                            <div class="flex-bw">
+                                <input type="number" name="sell-transfer" id="sell-transfer" placeholder="0" readonly>
+                                <select name="sell-currency" id="sell-currency">
+                                    <option value="VND">VND</option>
+                                </select>
+                            </div>
+                            <div class="form-subinfo" id="sell-subinfo">
+                                Đơn giá {{BTC.price|intcomma}} VND/BTC
+                            </div>
+                        </div>
+                        <button class="form-submit" type="submit">Bán</button>
+                    </form>
+                </div>
+            </div>
+            <p class="h4">Bạn có câu hỏi?</p>
+            <div class="questions-section">
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi có cần đăng ký tài khoản không?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Không! Chúng tôi muốn mang tới trải nghiệm đơn giản và nhanh chóng tối đa cho người dùng nên việc đăng ký tài khoản là không cần thiết.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi có cần KYC không?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Trong phần lớn trường hợp chúng tôi không cần KYC. Có vài trường hợp chúng tôi sẽ xác minh danh tính các khách hàng (KYC) và giao dịch được chỉ định. Điều này chỉ xảy ra khi hệ thống của chúng tôi hay hệ thống của đối tác phát hiện ra những điểm đáng nghi trong giao dịch.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Hạn mức một lần giao dịch là bao nhiêu?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Giới hạn cho 1 lần giao dịch là VND299,999,000. Bạn có thể thực hiện nhiều giao dịch trong một ngày
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi cần hướng dẫn cách giao dịch</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Vui lòng truy cập vào đường <a style="display: inline-block;font-size: 14px;" href="#">link này</a> để xem hướng dẫn mua bán.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'assets/js/script.js' %}"></script>
+    
+</body>
+</html>

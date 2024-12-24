@@ -1,0 +1,190 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng giao dịch tiền mã hóa Crypto</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <div class="header-section container-fluid">
+        <div class="container">
+            <div class="navbar" id="navbar">
+                <a href="/" class="logo">
+                    <img src="{% static 'assets/images/CoinB-05.png' %}" style="width: 192px;height: 64px;object-fit: cover;" alt="Logo">
+                </a>
+                <div class="nav-items">
+                    <a href="#" class="nav-link">
+                        <img src="{% static 'assets/images/ic_flag_vn.svg' %}" alt="Việt Nam">
+                    </a>
+                    <a href="#" class="nav-link">
+                        <img src="{% static 'assets/images/ic_moon.svg' %}" alt="Moon">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-section container">
+        <div class="wrapper">
+            <div class="form-section">
+                <span class="d-none" id="btc-price">{{BTC.price}}</span>
+                <span class="d-none" id="eth-price">{{ETH.price}}</span>
+                <span class="d-none" id="usdt-price">{{USDT.price}}</span>
+                <span class="d-none" id="bnb-price">{{BNB.price}}</span>
+
+                <div class="tabcontent" style="display: block;" id="buy-form">
+                    <h1 style="font-size: 24px;text-align: center;margin-top: 16px;">Mua {{buyOption}}</h1>
+
+                    <p style="margin-top: 32px;text-align: center;"><strong style="display: inline-block;font-size: 15px;">Mua {{buyAmount}} {{buyOption}} với {{buyTransfer|intcomma}} VND</strong></p>
+
+
+                    <form id="buy-coin-form" action="{% url 'create-buy' %}" method="POST">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="buy-amount" value="{{buyAmount}}">
+                        <input type="hidden" name="buy-option" value="{{buyOption}}">
+                        <input type="hidden" name="buy-transfer" value="{{buyTransfer}}">
+                        <input type="hidden" name="buy-currency" value="{{buyCurrency}}">
+
+                        <div class="form-control">
+                            <div class="form-label">Địa chỉ email</div>
+                            <div class="flex-bw">
+                                <input style="width: 100%;" type="text" name="email" id="email" placeholder="Địa chỉ email" required>
+                            </div>
+                        </div>
+                        <small style="display: inline-block;padding-left: 12px;font-size: 12px;margin-top: 4px;">Chúng tôi sử dụng email để gửi thông tin về giao dịch của bạn</small>
+
+                        <div class="form-control">
+                            <div class="form-label">Địa chỉ ví nhận</div>
+                            <div class="flex-bw">
+                                <input style="width: 100%;" type="text" maxlength="42" name="wallet-address" id="wallet-address" placeholder="Địa chỉ ví nhận" required>
+                            </div>
+                        </div>
+                        <small style="display: inline-block;padding-left: 12px;font-size: 12px;margin-top: 4px;">Vui lòng cung cấp địa chỉ ví nhận crypto của bạn</small>
+
+                        <div class="form-control">
+                            <select style="width: 100%;" name="blockchain-net" id="" required>
+                                <option value="BEP20">BNB Smart Chain (BEP20)</option>
+                                <option value="BEP20">Ethereum(ERC20)</option>
+                                <option value="BEP20">TRON(TRC20)</option>
+                            </select>
+                        </div>
+
+                        <small style="display: inline-block;font-size: 12px;margin-top: 6px;">Phí gửi {{fee}} {{buyOption}}</small><br>
+                        <small style="display: inline-block;font-size: 12px;margin-top: 12px;">Bạn sẽ nhận: {{remain}} {{buyOption}}</small>
+                        
+                        <button class="form-submit" type="submit">Tiếp tục</button>
+                        <a href="/" class="btn-prev">Quay lại</a>
+                    </form>
+                </div>
+
+
+
+
+                
+            </div>
+            <p class="h4">Bạn có câu hỏi?</p>
+            <div class="questions-section">
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi có cần đăng ký tài khoản không?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Không! Chúng tôi muốn mang tới trải nghiệm đơn giản và nhanh chóng tối đa cho người dùng nên việc đăng ký tài khoản là không cần thiết.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi có cần KYC không?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Trong phần lớn trường hợp chúng tôi không cần KYC. Có vài trường hợp chúng tôi sẽ xác minh danh tính các khách hàng (KYC) và giao dịch được chỉ định. Điều này chỉ xảy ra khi hệ thống của chúng tôi hay hệ thống của đối tác phát hiện ra những điểm đáng nghi trong giao dịch.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Hạn mức một lần giao dịch là bao nhiêu?</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Giới hạn cho 1 lần giao dịch là VND299,999,000. Bạn có thể thực hiện nhiều giao dịch trong một ngày
+                        </p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">
+                        <span>Tôi cần hướng dẫn cách giao dịch</span>
+                        <i class="flip-icon fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="question-desc">
+                        <p>
+                            Vui lòng truy cập vào đường <a style="display: inline-block;font-size: 14px;" href="#">link này</a> để xem hướng dẫn mua bán.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            // console.log("Oke!");
+            
+
+            $(".flip-icon").click(function(){
+                $(this).closest('.question').find('.question-desc').slideToggle("slow");
+            });
+
+
+            $(window).scroll(function() {
+                // Lấy vị trí cuộn của trang
+                var scrollTop = $(window).scrollTop();
+                // console.log("Vị trí cuộn hiện tại: " + scrollTop);
+
+                // Thực hiện hành động dựa trên vị trí cuộn
+                // Ví dụ: Thay đổi kiểu dáng của header khi cuộn
+                if (scrollTop > 100) {
+                    $('.header-section').addClass('scrolled');
+                } else {
+                    $('.header-section').removeClass('scrolled');
+                }
+            });
+
+        });
+
+        document.getElementById('buy-coin-form').addEventListener('submit', (event) => {
+            const walletAddress = document.getElementById('wallet-address').value;
+            if (walletAddress.length != 42) {
+                alert('Địa chỉ ví không hợp lệ!');
+                event.preventDefault();
+                return;
+            }
+        });
+
+        
+    </script>
+
+
+    
+</body>
+</html>

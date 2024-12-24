@@ -1,0 +1,78 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng giao dịch tiền mã hóa Crypto</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <div class="header-section container-fluid">
+        <div class="container">
+            <div class="navbar" id="navbar">
+                <a href="/" class="logo">
+                    <img src="{% static 'assets/images/CoinB-05.png' %}" style="width: 192px;height: 64px;object-fit: cover;" alt="Logo">
+                </a>
+                <div class="nav-items">
+                    <a href="#" class="nav-link">
+                        <img src="{% static 'assets/images/ic_flag_vn.svg' %}" alt="Việt Nam">
+                    </a>
+                    <a href="#" class="nav-link">
+                        <img src="{% static 'assets/images/ic_moon.svg' %}" alt="Moon">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-section container">
+        <h1 style="text-align: center;font-size: 32px;">Giao dịch thành công! Vui lòng đợi trong giây lát!</h1>
+    </div>
+
+    <input type="hidden" name="" id="buy-guid" value="{{buy_trans.guid}}">
+
+    
+    <script>
+
+        const intervalId = setInterval(checkBuyConfirm, 20000);
+
+        $(window).on('beforeunload', function() {
+            clearInterval(intervalId);
+        });
+        
+        function checkBuyConfirm() {
+            const guidElem = document.getElementById('buy-guid').value;
+
+            fetch(`/order/check-buy-confirm/${guidElem}/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.flag);
+
+                if (data.flag) {
+                    window.location.href = '/order/buy-confirm-success';
+                }
+                
+            })
+            .catch(error => console.error(error));
+        }
+
+    </script>
+
+
+    
+</body>
+</html>
