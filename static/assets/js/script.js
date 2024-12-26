@@ -38,22 +38,28 @@ $(document).ready(function(){
       if (buyAmount.value != '') {
         buyTransferInp.value = parseFloat(buyAmount.value) * parseFloat(priceValue);
         if (buySelectElem.value == 'USDT') {
-          buyTransferInp.value = parseFloat(buyAmount.value) * (parseFloat(priceValue) + 500);
+          buyTransferInp.value = parseFloat(buyAmount.value) * (parseFloat(priceValue) + 1000);
+        } else if (buySelectElem.value == 'BTC') {
+          buyTransferInp.value = parseFloat(buyAmount.value) * (parseFloat(priceValue) + 45000000);
+        } else if (buySelectElem.value == 'ETH') {
+          buyTransferInp.value = parseFloat(buyAmount.value) * (parseFloat(priceValue) + 2000000);
+        } else if (buySelectElem.value == 'BNB') {
+          buyTransferInp.value = parseFloat(buyAmount.value) * (parseFloat(priceValue) + 500000);
         }
-      }
+       }
     });
 
     buyAmount.addEventListener('input', (event) => {
       // console.log(buySelectElem.value);
       
       if (buySelectElem.value == 'BTC') {
-        buyTransferInp.value = parseFloat(document.getElementById('btc-price').innerHTML) * parseFloat(event.target.value);
+        buyTransferInp.value = (parseFloat(document.getElementById('btc-price').innerHTML) + 45000000) * parseFloat(event.target.value);
       } else if (buySelectElem.value == 'ETH') {
-        buyTransferInp.value = parseFloat(document.getElementById('eth-price').innerHTML) * parseFloat(event.target.value);
+        buyTransferInp.value = (parseFloat(document.getElementById('eth-price').innerHTML) + 2000000) * parseFloat(event.target.value);
       } else if (buySelectElem.value == 'USDT') {
-        buyTransferInp.value = (parseFloat(document.getElementById('usdt-price').innerHTML) + 500) * parseFloat(event.target.value);
+        buyTransferInp.value = (parseFloat(document.getElementById('usdt-price').innerHTML) + 1000) * parseFloat(event.target.value);
       } else if (buySelectElem.value == 'BNB') {
-        buyTransferInp.value = parseFloat(document.getElementById('bnb-price').innerHTML) * parseFloat(event.target.value);
+        buyTransferInp.value = (parseFloat(document.getElementById('bnb-price').innerHTML) + 500000) * parseFloat(event.target.value);
       } else {
         
       }
@@ -74,19 +80,25 @@ $(document).ready(function(){
         sellTransferInp.value = parseFloat(sellAmount.value) * parseFloat(priceValue);
         if (sellSelectElem.value == 'USDT') {
           sellTransferInp.value = parseFloat(sellAmount.value) * (parseFloat(priceValue) - 1500);
+        } else if (sellSelectElem.value == 'BTC') {
+          sellTransferInp.value = parseFloat(sellAmount.value) * (parseFloat(priceValue) - 50000000);
+        } else if (sellSelectElem.value == 'ETH') {
+          sellTransferInp.value = parseFloat(sellAmount.value) * (parseFloat(priceValue) - 2000000);
+        } else if (sellSelectElem.value == 'BNB') {
+          sellTransferInp.value = parseFloat(sellAmount.value) * (parseFloat(priceValue) - 500000);
         }
       }
     });
 
     sellAmount.addEventListener('input', (event) => {
       if (sellSelectElem.value == 'BTC') {
-        sellTransferInp.value = parseFloat(document.getElementById('btc-price').innerHTML) * parseFloat(event.target.value);
+        sellTransferInp.value = (parseFloat(document.getElementById('btc-price').innerHTML) - 50000000) * parseFloat(event.target.value);
       } else if (sellSelectElem.value == 'ETH') {
-        sellTransferInp.value = parseFloat(document.getElementById('eth-price').innerHTML) * parseFloat(event.target.value);
+        sellTransferInp.value = (parseFloat(document.getElementById('eth-price').innerHTML) - 2000000) * parseFloat(event.target.value);
       } else if (sellSelectElem.value == 'USDT') {
         sellTransferInp.value = (parseFloat(document.getElementById('usdt-price').innerHTML) - 1500) * parseFloat(event.target.value);
       } else if (sellSelectElem.value == 'BNB') {
-        sellTransferInp.value = parseFloat(document.getElementById('bnb-price').innerHTML) * parseFloat(event.target.value);
+        sellTransferInp.value = (parseFloat(document.getElementById('bnb-price').innerHTML) - 500000) * parseFloat(event.target.value);
       } else {
         
       }

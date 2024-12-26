@@ -1,8 +1,17 @@
 from django.urls import path 
 from .views import * 
+from .sitemaps import * 
+from django.contrib.sitemaps.views import sitemap 
+
+
+sitemaps = {
+    'static': StaticViewSitemap,
+}
 
 
 urlpatterns = [
+    path('robots.txt', robots_txt, name='robots_txt'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('', index, name='index'),
     path('order/create-buy/', create_buy_view, name='create-buy'),
     path('order/create-sell/', create_sell_view, name='create-sell'),

@@ -25,8 +25,10 @@ def get_binance_p2p_usdt_price():
     response = requests.post(url, json=data, headers=headers)
     if response.status_code == 200:
         prices = response.json()
+        # print(prices['data'][0]['adv']['price'])
+        # print(prices['data'][-1]['adv']['price'])
         if prices['data']:
-            last_ad = prices['data'][-1]
+            last_ad = prices['data'][0]
             print(f"Giá USDT cuối cùng: {last_ad['adv']['price']}, Số lượng giao dịch còn lại: {last_ad['adv']['surplusAmount']}") 
             price = last_ad['adv']['price'] if last_ad['adv']['price'] else None 
             return price 
@@ -60,7 +62,7 @@ def get_binance_p2p_bnb_price():
     if response.status_code == 200:
         prices = response.json()
         if prices['data']:
-            last_ad = prices['data'][-1]
+            last_ad = prices['data'][0]
             price = last_ad['adv']['price']
             trade_amount = last_ad['adv']['surplusAmount']
             print(f"Giá BNB cuối cùng: {price}, Số lượng giao dịch còn lại: {trade_amount}")

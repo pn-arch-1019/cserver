@@ -6,6 +6,11 @@ from django.utils import timezone
 import requests 
 
 
+def robots_txt(request):
+    content = "User-agent: *\nDisallow: /admin/\nSitemap: https://coinbotc.net/sitemap.xml"
+    return HttpResponse(content, content_type='text/plain')
+
+
 def index(request):
     coins = CryptoType.objects.all()
     context = {}
